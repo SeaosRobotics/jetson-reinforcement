@@ -21,11 +21,14 @@ This repository includes discrete Deep Q-Learning (DQN) and continuous A3G algor
 * [Digging into the C++ API](#digging-into-the-c-api)
 * [Testing the C++ API](#testing-the-c-api)
 	* [Catch](#catch)
+	* [Fruit](#fruit)
 * [3D Simulation](#3d-simulation)
 	* [Robotic Arm](#robotic-arm)
 	* [Rover Navigation](#rover-navigation)
 * [Continuous Control](#continuous-control)
 * [Appendix: Using LUA](#appendix-using-lua)
+
+> note:  stream our **[webinar](https://nvda.ws/2KdbtaO)** on the topic that follows this tutorial.
 
 # Building from Source
 
@@ -172,7 +175,7 @@ Next, we'll look at integrating these standalone Python examples into robotics c
 
 To take these deep reinforcement learners from monolithic Python examples into libray form that can be integrated with robots and simulators, we provide a C++ wrapper library and API to the Python code.  Underneath, the library uses Python's low-level C FFI to pass the tensor memory between the application and PyTorch without extra copies (ZeroCopy).  
 
-The library is architected to be extended to new types of learning algorithms.  Below is pseudocode illustrating the signature of the [`rlAgent`](c/rlAgent.h) interface which the RL implementations inherit from:
+The library is architected to be modular and extended to support new types of learning algorithms.  Below is pseudocode illustrating the signature of the [`rlAgent`](c/rlAgent.h) interface which the RL implementations inherit from:
 
 ``` c++
 /**
@@ -322,23 +325,23 @@ To start [`fruit`](samples/fruit/fruit.cpp), launch the following executable fro
 $ ./fruit
 ```
 
-It should achieve 85% accuracy after around ~100 episodes within the default `48x48` environment:
+It should achieve around 95% accuracy after around ~100 episodes within the default `48x48` environment:
 
 ```
 action = DOWN   reward = +0.0628     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
 action = LEFT   reward = +0.0453     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
-action = LEFT   reward = +0.0271     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
-action = LEFT   reward = +0.0084     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
-action = UP     reward = +0.1208     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
-action = LEFT   reward = +0.1154     wins = 052 of 094 (0.55)   16 of last 20  (0.80)  (max=0.80)
+action = LEFT   reward = +0.0271     wins = 052 of 094 (0.55)   17 of last 20  (0.85)  (max=0.85)
+action = LEFT   reward = +0.0084     wins = 052 of 094 (0.55)   17 of last 20  (0.85)  (max=0.85)
+action = UP     reward = +0.1208     wins = 052 of 094 (0.55)   17 of last 20  (0.85)  (max=0.85)
+action = LEFT   reward = +0.1154     wins = 052 of 094 (0.55)   17 of last 20  (0.85)  (max=0.85)
 action = UP     reward = +1.0000 EOE wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1441     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1424     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1406     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1386     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1365     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = DOWN   reward = +0.1342     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
-action = RIGHT  reward = +0.0134     wins = 053 of 095 (0.56)   17 of last 20  (0.85)  (max=0.85)
+action = DOWN   reward = +0.1441     wins = 053 of 095 (0.56)   18 of last 20  (0.90)  (max=0.90)
+action = DOWN   reward = +0.1424     wins = 053 of 095 (0.56)   18 of last 20  (0.90)  (max=0.90)
+action = DOWN   reward = +0.1406     wins = 053 of 095 (0.56)   18 of last 20  (0.90)  (max=0.90)
+action = DOWN   reward = +0.1386     wins = 053 of 095 (0.56)   18 of last 20  (0.90)  (max=0.90)
+action = DOWN   reward = +0.1365     wins = 054 of 096 (0.57)   19 of last 20  (0.95)  (max=0.95)
+action = DOWN   reward = +0.1342     wins = 054 of 096 (0.57)   19 of last 20  (0.95)  (max=0.95)
+action = RIGHT  reward = +0.0134     wins = 054 of 096 (0.57)   19 of last 20  (0.95)  (max=0.95)
 ```
 
 #### Alternate Arguments
